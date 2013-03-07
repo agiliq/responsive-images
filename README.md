@@ -1,7 +1,7 @@
 What is this
 --------------
 
-Responsive design requires *response images*.Images which adapt their size depending upon what device you are using.
+Responsive design requires *response images*. Images which adapt their size depending upon what device you are using.
 This app provides this.
 
 Usage
