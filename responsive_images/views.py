@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
 from django.conf import settings
 
-from responsive_images.utils  import get_final_resolution
+from responsive_images.utils  import get_final_resolution, get_file
 
 from PIL import Image
 
@@ -25,6 +25,9 @@ def adapt_image(request):
     fullname = settings.STATIC_ROOT + filename[len(settings.STATIC_URL)-1:]
     filename = filename.split("/").pop()
     filename, extension = filename.split(".")
+    i = Image.open(fullname)
+    if max(i.size[0], i.size[1]) < final_resolution:
+        return get_file(fullname, extension, filename)
     filename = "%s_%s_%s.%s" % (filename, final_resolution, final_resolution,
                              extension)
 
@@ -38,17 +41,6 @@ def adapt_image(request):
         resized_image = image.resize((final_resolution, final_resolution), Image.ANTIALIAS)
         resized_image.save(filename, extension, quality=75)
 
-
-    f = file(filename, "rb")
-
-    #Return resized image
-    wrapper = FileWrapper(f)
-    if extension not in ['png', 'jpg', 'jpeg', 'gif']:
-        mimetype = 'image/jpeg'
-    else:
-        mimetype = 'image/%s' % extension
-    response = HttpResponse(wrapper, mimetype=mimetype)
-    response['Content-Length'] = os.path.getsize(filename)
-    response['Content-Disposition'] = 'attachment; filename={0}'.format(filename)
-    return response
+    # Return resized image
+    return get_file(fullname, extension, filename)
 

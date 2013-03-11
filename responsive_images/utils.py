@@ -1,4 +1,8 @@
 from django.conf import settings
+from django.core.servers.basehttp import FileWrapper
+from django.http import HttpResponse
+
+import os
 
 
 def get_final_resolution(resolution):
@@ -18,3 +22,16 @@ def get_final_resolution(resolution):
         #final_resolution = resolution
     final_resolution = final_resolution-50
     return final_resolution
+
+
+def get_file(fullname, extension, filename):
+    f = file(fullname, "rb")
+    wrapper = FileWrapper(f)
+    if extension not in ['png', 'jpg', 'jpeg', 'gif']:
+        mimetype = 'image/jpeg'
+    else:
+        mimetype = 'image/%s' % extension
+    response = HttpResponse(wrapper, mimetype=mimetype)
+    response['Content-Length'] = os.path.getsize(fullname)
+    response['Content-Disposition'] = 'attachment; filename={0}'.format(filename)
+    return response
