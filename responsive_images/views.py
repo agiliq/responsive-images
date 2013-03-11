@@ -12,32 +12,26 @@ from subprocess import call
 
 
 def adapt_image(request):
-    resolutions = [1382, 992, 768, 480]
-    final_resolution = resolutions[0]
-    try:
-        resolutions = settings.RESPONSIVE_IMAGE_RESOLUTIONS
-    except AttributeError:
-        pass
+
     try:
         resolution = int(request.COOKIES['resolution'])
-        final_resolution = get_final_resolution(resolution, resolutions)
+        final_resolution = get_final_resolution(resolution)
     except KeyError:
         final_resolution = 100
 
 
+    filename = request.META['QUERY_STRING'].replace("___asnf874wthwengsfduy", "")
 
-    filename = request.META['QUERY_STRING']
-
-    fullname = settings.PROJECT_PATH + filename
+    fullname = settings.STATIC_ROOT + filename[len(settings.STATIC_URL)-1:]
     filename = filename.split("/").pop()
     filename, extension = filename.split(".")
     filename = "%s_%s_%s.%s" % (filename, final_resolution, final_resolution,
                              extension)
 
-    if not os.path.exists(settings.PROJECT_PATH+'/static/responsive_images_cache'):
-        os.chdir(settings.PROJECT_PATH+'/static')
+    if not os.path.exists(settings.STATIC_ROOT+'/responsive_images_cache'):
+        os.chdir(settings.STATIC_ROOT)
         call(['mkdir', 'responsive_images_cache'])
-    os.chdir(settings.PROJECT_PATH+'/static/responsive_images_cache')
+    os.chdir(settings.STATIC_ROOT+'/responsive_images_cache')
 
     image = Image.open(fullname)
     if not os.path.exists(filename):
@@ -45,14 +39,15 @@ def adapt_image(request):
         resized_image.save(filename, extension, quality=75)
 
 
-    try:
-        f = file(filename, "rb")
-    except Exception, e:
-        return HttpResponse(str(e))
+    f = file(filename, "rb")
 
     #Return resized image
     wrapper = FileWrapper(f)
-    response = HttpResponse(wrapper, mimetype="image/jpeg")
+    if extension not in ['png', 'jpg', 'jpeg', 'gif']:
+        mimetype = 'image/jpeg'
+    else:
+        mimetype = 'image/%s' % extension
+    response = HttpResponse(wrapper, mimetype=mimetype)
     response['Content-Length'] = os.path.getsize(filename)
     response['Content-Disposition'] = 'attachment; filename={0}'.format(filename)
     return response

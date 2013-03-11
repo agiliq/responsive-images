@@ -1,17 +1,20 @@
+from django.conf import settings
 
 
-
-def get_final_resolution(resolution, resolutions):
-    if resolution > resolutions[0]:
-        resolutions[0]
-
-    else:
+def get_final_resolution(resolution):
+    resolution = int(resolution)
+    try:
+        resolutions = settings.RESPONSIVE_IMAGE_RESOLUTIONS
+    except AttributeError:
+        resolutions = [1382, 992, 768, 480]
+    final_resolution = resolutions[0]
+    if resolution < resolutions[0]:
         for r in resolutions:
             if resolution > r:
                 final_resolution = r
                 break
-    if resolution < resolutions[len(resolutions)-1]:
-        final_resolution = resolutions[len(resolutions)-1]
+    if resolution < resolutions[-1]:
+        final_resolution = resolutions[-1]
         #final_resolution = resolution
-    final_resolution = final_resolution-100
+    final_resolution = final_resolution-50
     return final_resolution
