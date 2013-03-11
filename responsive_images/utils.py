@@ -24,14 +24,14 @@ def get_final_resolution(resolution):
     return final_resolution
 
 
-def get_file(fullname, extension, filename):
-    f = file(fullname, "rb")
+def get_file(filename, extension):
+    f = file(filename, "rb")
     wrapper = FileWrapper(f)
     if extension not in ['png', 'jpg', 'jpeg', 'gif']:
         mimetype = 'image/jpeg'
     else:
         mimetype = 'image/%s' % extension
     response = HttpResponse(wrapper, mimetype=mimetype)
-    response['Content-Length'] = os.path.getsize(fullname)
+    response['Content-Length'] = os.path.getsize(filename)
     response['Content-Disposition'] = 'attachment; filename={0}'.format(filename)
     return response

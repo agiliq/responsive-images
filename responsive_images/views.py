@@ -27,7 +27,7 @@ def adapt_image(request):
     filename, extension = filename.split(".")
     i = Image.open(fullname)
     if max(i.size[0], i.size[1]) < final_resolution:
-        return get_file(fullname, extension, filename)
+        return get_file(filename, extension)
     filename = "%s_%s_%s.%s" % (filename, final_resolution, final_resolution,
                              extension)
 
@@ -42,5 +42,5 @@ def adapt_image(request):
         resized_image.save(filename, extension, quality=75)
 
     # Return resized image
-    return get_file(fullname, extension, filename)
+    return get_file(filename, extension)
 
