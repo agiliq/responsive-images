@@ -12,13 +12,11 @@ from subprocess import call
 
 
 def adapt_image(request):
-
     try:
         resolution = int(request.COOKIES['resolution'])
         final_resolution = get_final_resolution(resolution)
     except KeyError:
         final_resolution = 100
-
 
     filename = request.META['QUERY_STRING'].replace("___asnf874wthwengsfduy", "")
 
@@ -26,8 +24,9 @@ def adapt_image(request):
     filename = filename.split("/").pop()
     filename, extension = filename.split(".")
     i = Image.open(fullname)
+
     if max(i.size[0], i.size[1]) < final_resolution:
-        return get_file(filename, extension)
+        return get_file(fullname, extension)
     filename = "%s_%s_%s.%s" % (filename, final_resolution, final_resolution,
                              extension)
 
