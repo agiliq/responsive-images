@@ -1,7 +1,7 @@
 What is this
 --------------
 
-Responsive design requires *response images*. Images which adapt their size depending upon what device you are using.
+Responsive design requires *responsive images*. Images which adapt their size depending upon what device you are using.
 This app provides this.
 
 Usage
@@ -20,7 +20,7 @@ If you are using a media file:
 
 If you are using a static file.
 
-    <img src="{% sttaic_responsive 'img/logo.png' %}" />
+    <img src="{% static_responsive 'img/logo.png' %}" />
 
 
 
