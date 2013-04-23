@@ -30,7 +30,14 @@ If you are using a static file.
     <img src="{% static_responsive 'img/logo.png' %}" />
 
 
-Modify your nginx configuration(or related) as per the provided nginx.conf file.
+Modify your nginx configuration(or related) as below:
+
+    Please do a permanent redirect to all the files ending with "___asnf874wthwengsfduy".
+
+This can be done via nginx as follows:
+
+    rewrite (___asnf874wthwengsfduy)$ /adapt-image?$request_uri? permanent;
+
 
 
 Installations
