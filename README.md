@@ -7,21 +7,30 @@ This app provides this.
 Usage
 -----------
 
+Add RESPONSIVE_IMAGE_RESOLUTIONS to settings with an array of image sizes required as per resolution.  
+
+Example:
+
+    RESPONSIVE_IMAGE_RESOLUTIONS = [1300, 1200, 1100, 800, 500]
+
+From above values, if the resolution lies between 1300 and 1200, then the image of width 1200 will be shown.
+
+Add this to the head section of your template.
+
+     <script>document.cookie='resolution='+Math.max(window.outerWidth, 0)+'; path=/';</script>
+
+
 Add this to the start of your template.
 
     {% load responsive_images_tags %}
-
-If you are using a media file:
-
-    {% responsive item.image as im %}
-        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
-    {% endresponsive %}
 
 
 If you are using a static file.
 
     <img src="{% static_responsive 'img/logo.png' %}" />
 
+
+Modify your nginx configuration(or related) as per the provided nginx.conf file.
 
 
 Installations
