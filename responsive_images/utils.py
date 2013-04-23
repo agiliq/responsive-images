@@ -11,6 +11,8 @@ def get_final_resolution(resolution):
         resolutions = settings.RESPONSIVE_IMAGE_RESOLUTIONS
     except AttributeError:
         resolutions = [1382, 992, 768, 480]
+    resolutions.sort()
+    resolutions.reverse()
     final_resolution = resolutions[0]
     if resolution < resolutions[0]:
         for r in resolutions:
