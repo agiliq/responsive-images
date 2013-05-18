@@ -22,7 +22,7 @@ def get_final_resolution(resolution):
     if resolution < resolutions[-1]:
         final_resolution = resolutions[-1]
         #final_resolution = resolution
-    final_resolution = final_resolution-50
+    final_resolution = final_resolution - 50
     return final_resolution
 
 
