@@ -1,6 +1,3 @@
-# Create your views here.
-from django.http import HttpResponse
-from django.core.servers.basehttp import FileWrapper
 from django.conf import settings
 
 from responsive_images.utils  import get_final_resolution, get_file
