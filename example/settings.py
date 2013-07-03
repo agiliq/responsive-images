@@ -10,6 +10,11 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+#responsive_images settings:
+RESPONSIVE_IMAGE_RESOLUTIONS = [1382, 992, 768, 480]
+IMAGE_ENDS_WITH = '___asnf874wthwengsfduy'
+RESPONSIVE_IMAGES_CACHE_DIR = 'responsive_images_cache'
+
 MANAGERS = ADMINS
 
 DATABASES = {
@@ -46,14 +51,8 @@ USE_L10N = True
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_ROOT = PROJECT_PATH+'/media'
+MEDIA_URL = '/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -67,7 +66,8 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    (PROJECT_PATH+'/static'),
+        PROJECT_PATH+'/static',
+        MEDIA_ROOT,
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -167,6 +167,8 @@ LOGGING = {
     }
 }
 
-#responsive_images settings:
-RESPONSIVE_IMAGE_RESOLUTIONS = [1382, 992, 768, 480]
-IMAGE_ENDS_WITH = '___asnf874wthwengsfduy'
+
+try:
+    from localsettings import *
+except ImportError:
+    pass
