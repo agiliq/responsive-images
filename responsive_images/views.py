@@ -15,7 +15,7 @@ def adapt_image(request):
     except KeyError:
         final_resolution = 100
 
-    filename = request.META['QUERY_STRING'].replace("___asnf874wthwengsfduy", "")
+    filename = request.META['QUERY_STRING'].replace(settings.IMAGE_ENDS_WITH, "")
 
     fullname = settings.STATIC_ROOT + filename[len(settings.STATIC_URL)-1:]
     filename = filename.split("/").pop()

@@ -67,7 +67,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-        (PROJECT_PATH+'/static'),
+    (PROJECT_PATH+'/static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -169,3 +169,4 @@ LOGGING = {
 
 #responsive_images settings:
 RESPONSIVE_IMAGE_RESOLUTIONS = [1382, 992, 768, 480]
+IMAGE_ENDS_WITH = '___asnf874wthwengsfduy'
