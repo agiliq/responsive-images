@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.staticfiles import finders
 
 from responsive_images.utils  import get_final_resolution, get_file
 
@@ -17,7 +18,14 @@ def adapt_image(request):
 
     filename = request.META['QUERY_STRING'].replace(settings.IMAGE_ENDS_WITH, "")
 
-    fullname = settings.STATIC_ROOT + filename[len(settings.STATIC_URL)-1:]
+    if filename.find(settings.STATIC_URL) == 0:
+        filename = filename[len(settings.STATIC_URL):]
+    elif filename.find(settings.MEDIA_URL) == 0:
+        filename = filename[len(settings.MEDIA_URL):]
+    else:
+        return None
+    
+    fullname = finders.find(filename)
     filename = filename.split("/").pop()
     filename, extension = filename.split(".")
     i = Image.open(fullname)
@@ -27,13 +35,14 @@ def adapt_image(request):
     filename = "%s_%s_%s.%s" % (filename, final_resolution, final_resolution,
                              extension)
 
-    if not os.path.exists(settings.STATIC_ROOT+'/responsive_images_cache'):
-        os.chdir(settings.STATIC_ROOT)
-        call(['mkdir', 'responsive_images_cache'])
-    os.chdir(settings.STATIC_ROOT+'/responsive_images_cache')
+    cache_path = os.path.join(settings.MEDIA_ROOT, settings.RESPONSIVE_IMAGES_CACHE_DIR)
+    if not finders.find(settings.RESPONSIVE_IMAGES_CACHE_DIR):
+        os.chdir(settings.MEDIA_ROOT)
+        call(['mkdir', settings.RESPONSIVE_IMAGES_CACHE_DIR])
+    os.chdir(cache_path)
 
     image = Image.open(fullname)
-    if not os.path.exists(filename):
+    if not finders.find(settings.RESPONSIVE_IMAGES_CACHE_DIR+"/"+filename):
         resized_image = image.resize((final_resolution, final_resolution), Image.ANTIALIAS)
         resized_image.save(filename, extension, quality=75)
 
