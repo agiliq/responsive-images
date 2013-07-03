@@ -1,8 +1,9 @@
-from django import template
+from django.template import Library, Node, NodeList, Variable
 
-register = template.Library()
+register = Library()
 
 
-@register.filter(name='static_responsive')
-def get_responsive_url_static(url):
-    return "%s___asnf874wthwengsfduy" % url
+@register.simple_tag()
+def static_responsive(url):
+    url = "%s___asnf874wthwengsfduy" % url
+    return url

@@ -6,7 +6,7 @@
         <hr>
         {% load responsive_images_tags %}
 
-        <img src='{{  "/static/images/ubuntu.png"|static_responsive }}' />
+        <img src={% static_responsive '/static/images/ubuntu.png' %} />
 
     </body>
 </html>
