@@ -13,7 +13,8 @@ ADMINS = (
 #responsive_images settings:
 RESPONSIVE_IMAGE_RESOLUTIONS = [1382, 992, 768, 480]
 IMAGE_ENDS_WITH = '___asnf874wthwengsfduy'
-RESPONSIVE_IMAGES_CACHE_DIR = 'responsive_images_cache'
+RESPONSIVE_IMAGES_CACHE_DIR = 'responsive_images_cache' #optional
+RESPONSIVE_IMAGE_QUALITY = 75 #Optional
 
 MANAGERS = ADMINS
 
