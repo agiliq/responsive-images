@@ -6,7 +6,7 @@ from responsive_images.utils import (
 
 
 def adapt_image(request):
-    final_resolution = get_final_resolution(request)
+    final_resolution = get_final_resolution(request.COOKIES)
 
     filename = request.META['QUERY_STRING'].replace(settings.IMAGE_ENDS_WITH, "")
 

@@ -9,10 +9,10 @@ from PIL import Image
 import os
 
 
-def get_final_resolution(request):
+def get_final_resolution(cookies):
     resolution = None
     try:
-        resolution = int(request.COOKIES['resolution'])
+        resolution = int(cookies['resolution'])
     except KeyError:
         return 100
     try:
