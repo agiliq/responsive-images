@@ -7,7 +7,6 @@ from django.http import HttpResponse
 from PIL import Image
 
 import os
-from subprocess import call
 
 
 def get_final_resolution(request):
@@ -60,7 +59,7 @@ def get_resized_image(filename, final_resolution):
     filename = "%s_%s_%s.%s" % (filename, final_width, final_height,
                              extension)
 
-    cache_dir_name = getattr('settings', 'RESPONSIVE_IMAGES_CACHE_DIR',
+    cache_dir_name = getattr(settings, 'RESPONSIVE_IMAGES_CACHE_DIR',
                              'responsive_images_cache')
     cache_path = os.path.join(settings.MEDIA_ROOT, cache_dir_name)
     if not finders.find(cache_dir_name):
