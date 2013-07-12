@@ -71,5 +71,5 @@ def get_resized_image(filename, final_resolution):
         size = (final_width, final_height)
         resized_image = i.resize(size, Image.ANTIALIAS)
         resized_image.save(resized_image_full_path, extension,
-            quality=getattr('settings', cache_dir_name, 75)) 
+            quality=getattr('settings', 'RESPONSIVE_IMAGE_QUALITY', 75)) 
     return resized_image_full_path, extension
