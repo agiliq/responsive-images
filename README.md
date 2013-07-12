@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/agiliq/responsive-images.png?branch=master)](https://travis-ci.org/agiliq/responsive-images)
+
 What is this
 --------------
 
@@ -7,7 +9,15 @@ This app provides this.
 Usage
 -----------
 
-Add RESPONSIVE_IMAGE_RESOLUTIONS to settings with an array of image sizes required as per resolution.  
+Settings: 
+* RESPONSIVE_IMAGE_RESOLUTIONS to settings with an array of image sizes required as per resolution.  
+* IMAGE_ENDS_WITH (A string): Image urls ending with this string will be made responsive.
+
+Optional Settings:
+* RESPONSIVE_IMAGES_CACHE_DIR = Defaults to 'responsive_images_cache'.
+ Resized images will be placed in this directory.
+* RESPONSIVE_IMAGE_QUALITY: Defaults to 75. This is used while resizing the original image.
+* RESPONSIVE_IMAGE__FOR_TEST: This is required when testing. 
 
 Example:
 
@@ -28,6 +38,10 @@ Add this to the start of your template.
 If you are using a static file.
 
     <img src="{% static_responsive 'img/logo.png' %}" />
+
+If you are using a media file.
+
+    <img src="{% static_responsive instance.fieldname %}" />
 
 
 Modify your nginx configuration(or related) as below:
