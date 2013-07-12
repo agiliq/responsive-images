@@ -27,7 +27,7 @@ def get_final_resolution(cookies):
             if resolution > r:
                 final_resolution = r
                 break
-    if resolution < resolutions[-1]:
+    if resolution <= resolutions[-1]:
         final_resolution = resolutions[-1]
     return final_resolution
 
