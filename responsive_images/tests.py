@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.conf import settings
 from django.contrib.staticfiles import finders
 
-from .utils import get_resized_image, get_final_resolution
+from .utils import get_resized_image, get_final_resolution, get_file
 
 from PIL import Image
 
@@ -95,3 +95,12 @@ class TestUtils(TestCase):
         self.assertEqual(480, get_final_resolution(cookies))
         if old_resolutions:
             setattr(settings, 'RESPONSIVE_IMAGE_RESOLUTIONS', old_resolutions)
+
+    def test_get_file(self):
+        test_image = settings.RESPONSIVE_IMAGE_FOR_TEST
+        extension = test_image.split(".").pop()
+        image_full_path = finders.find(test_image)
+        response = get_file(image_full_path, extension)
+        response_content = response.content
+        file_content = open(image_full_path).read()
+        self.assertEqual(response_content, file_content)
