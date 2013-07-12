@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.conf import settings
 from django.contrib.staticfiles import finders
 
-from .utils import get_resized_image
+from .utils import get_resized_image, get_final_resolution
 
 from PIL import Image
 
@@ -58,3 +58,40 @@ class TestUtils(TestCase):
         if hasattr(settings, 'RESPONSIVE_IMAGES_CACHE_DIR'):
             settings.RESPONSIVE_IMAGES_CACHE_DIR = old_cache_dir_name
         os.removedirs(finders.find(new_cache_dir_name))
+
+    def test_get_final_resolution(self):
+        old_resolutions = getattr(
+            settings, 'RESPONSIVE_IMAGE_RESOLUTIONS', None)
+        new_resolutions = [
+            1382, 1068, 992, 850, 800, 768, 700, 600, 480, 350,
+            250, 150, 80, 40]
+        setattr(settings, 'RESPONSIVE_IMAGE_RESOLUTIONS', new_resolutions)
+        cookies = {'resolution': 1400}
+        self.assertEqual(1382, get_final_resolution(cookies))
+        cookies = {'resolution': 1200}
+        self.assertEqual(1068, get_final_resolution(cookies))
+        cookies = {'resolution': 1000}
+        self.assertEqual(992, get_final_resolution(cookies))
+        cookies = {'resolution': 770}
+        self.assertEqual(768, get_final_resolution(cookies))
+        cookies = {'resolution': 60}
+        self.assertEqual(40, get_final_resolution(cookies))
+        cookies = {'resolution': 40}
+        self.assertEqual(40, get_final_resolution(cookies))
+        cookies = {'resolution': 20}
+        self.assertEqual(40, get_final_resolution(cookies))
+        self.assertEqual(100, get_final_resolution({}))
+        if old_resolutions:
+            settings.RESPONSIVE_IMAGE_RESOLUTIONS = old_resolutions
+        else:
+            delattr(settings, 'RESPONSIVE_IMAGE_RESOLUTIONS')
+
+    def test_get_final_resolution_optional_setting(self):
+        old_resolutions = None
+        if hasattr(settings, 'RESPONSIVE_IMAGE_RESOLUTIONS'):
+            old_resolutions = settings.RESPONSIVE_IMAGE_RESOLUTIONS
+            delattr(settings, 'RESPONSIVE_IMAGE_RESOLUTIONS')
+        cookies = {'resolution': 480}
+        self.assertEqual(480, get_final_resolution(cookies))
+        if old_resolutions:
+            setattr(settings, 'RESPONSIVE_IMAGE_RESOLUTIONS', old_resolutions)
