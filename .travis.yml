@@ -7,6 +7,6 @@ install:
     - "pip install -r requirements.txt --use-mirrors"
     - "pip install coveralls --use-mirrors"
 # command to run tests
-script: coverage run manage.py test responsive_images
+script: coverage run --source=responsive_images manage.py test
 after_success:
     - coveralls
