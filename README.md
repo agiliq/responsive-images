@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/agiliq/responsive-images.png?branch=master)](https://travis-ci.org/agiliq/responsive-images)
+[![Coverage Status](https://coveralls.io/repos/agiliq/responsive-images/badge.png?branch=master)](https://coveralls.io/r/agiliq/responsive-images?branch=master)
 
 What is this
 --------------
@@ -46,7 +47,7 @@ If you are using a media file.
 
 Modify your nginx configuration(or related) as below:
 
-    Please do a permanent redirect to all the files ending with "___asnf874wthwengsfduy".
+    Please do a permanent redirect to all the files ending with "___asnf874wthwengsfduy". (Value from IMAGE_ENDS_WITH setting)
 
 This can be done via nginx as follows:
 
