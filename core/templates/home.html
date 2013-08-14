@@ -58,7 +58,9 @@
                 </div>
                 </div>
                 <div class='images'>
-                    <img src={% static_responsive '/static/images/ubuntu.png' %} />
+                    {% with STATIC_URL|add:"images/ubuntu.png" as imageurl %}
+                    <img src={% static_responsive imageurl %} />
+                    {% endwith %}
                 </div>
             </div>
             <div class='tab-pane' id='tab-how'>
