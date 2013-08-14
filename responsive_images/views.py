@@ -11,8 +11,7 @@ def adapt_image(request):
     filename = request.META['QUERY_STRING'].replace(settings.IMAGE_ENDS_WITH, "")
 
     if filename.find(settings.STATIC_URL) == 0:
-        filename = filename[len(settings.STATIC_URL)-\
-            len(settings.EXTRA_STATIC_DIRECTORY)-1:]
+        filename = filename[len(settings.STATIC_URL):]
     elif filename.find(settings.MEDIA_URL) == 0:
         filename = filename[len(settings.MEDIA_URL):]
     else:
