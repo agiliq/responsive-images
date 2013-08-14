@@ -5,7 +5,7 @@ What is this
 --------------
 
 Responsive design requires *responsive images*. Images which adapt their size depending upon what device you are using.
-This app provides this.
+This app provides that.
 
 Usage
 -----------
