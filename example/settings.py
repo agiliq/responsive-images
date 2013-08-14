@@ -64,7 +64,9 @@ STATIC_ROOT = '/home/agiliq/build/agiliq/agiliqcom/static/responsive'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/responsive/'
+EXTRA_STATIC_DIRECTORY = 'responsive'
+STATIC_URL = '/static/' + EXTRA_STATIC_DIRECTORY + '/'
+
 
 # Additional locations of static files
 STATICFILES_DIRS = (
